@@ -1,0 +1,22 @@
+<article>
+    <h1 class="page-title"><?php echo $article->article_title; ?></h1>
+    
+    <div id="<?php echo $page; ?>" class="clearfix"> 
+        <div class="post-meta">
+            by <?php echo $author->full_name; ?> | <?php echo date('d M Y', strtotime($article->article_date)); ?>
+        </div>
+        
+        <div class="article-content">
+            <img src="http://lorempixel.com/200/200/people" style="float:left; margin:0 15px 0 0;" />
+            <div><?php echo $article->article_body; ?></div>
+        </div>
+    </div>
+    
+    <button id="like-button" data-article_id="<?php echo $article->article_id; ?>" value="Like" onclick="processLike()" >Like This Story</button>
+</article>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		checkCookie(<?php echo $article->article_id; ?>);
+	});
+</script>

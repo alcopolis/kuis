@@ -1,0 +1,28 @@
+<div id="login-register" style="margin-top:40px;">
+    <div class="tab-nav"><a href="#login" class="current">Login</a> | <a href="#register">Signup</a></div>
+    
+    <div class="tab-wrapper clearfix">
+        <div id="login" class="tab current">
+            <form action="front/login" method="post">
+                <input type="text" name="email" placeholder="Email" /> <br/>
+                <input type="password" name="password" placeholder="Password" /><br/>  
+                <input type="submit" value="Submit" />                    
+            </form>
+        </div>
+        <div id="register" class="tab">
+            <form action="front/register" method="post">
+                <input type="text" name="full_name" placeholder="Full Name" /><br/>
+                <input type="text" name="email" placeholder="Email" /><br/>
+                <input type="password" name="password" placeholder="Password" /><br/>  
+                <input type="password" name="confirm" placeholder="Confirm Password" /><br/>  
+                <input type="submit" value="Submit" />                    
+            </form>
+        </div>
+    </div>
+    
+    <?php if($notif != NULL){ ?>
+        <div id="notif" style="font-size:12px; color:#F00; padding:10px 0; margin:10px 0; background:#FFF; text-shadow:none;">
+            <?php echo $notif; ?>
+        </div>	
+    <?php } ?>
+</div>

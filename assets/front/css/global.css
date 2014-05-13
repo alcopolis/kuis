@@ -1,0 +1,77 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	margin:0;
+	width:100%;
+	/*background: #2989d8;*/
+	
+	
+	background: #2989d8;
+	background: -moz-linear-gradient(45deg,  #2989d8 50%, #1e5799 100%);
+	background: -webkit-gradient(linear, left bottom, right top, color-stop(50%,#2989d8), color-stop(100%,#1e5799));
+	background: -webkit-linear-gradient(45deg,  #2989d8 50%,#1e5799 100%);
+	background: -o-linear-gradient(45deg,  #2989d8 50%,#1e5799 100%);
+	background: -ms-linear-gradient(45deg,  #2989d8 50%,#1e5799 100%);
+	background: linear-gradient(45deg,  #2989d8 50%,#1e5799 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2989d8', endColorstr='#1e5799',GradientType=1 );
+	
+}
+
+ul{list-style:none;}
+
+a{text-decoration:none}
+
+.left{float:left !important;}
+
+.right{float:right !important;}
+
+.clear{clear:both;}
+
+.clearfix:after{content: "."; display: block; height: 0; clear: both;  visibility: hidden;}
+
+
+
+/* ------------------- Form --------------------- */
+input{
+	border:none;
+	padding:10px;
+	margin:5px 0;
+}
+
+
+
+
+
+/* ------------------- Nav --------------------- */
+
+ul#nav{
+	list-style:none;
+	margin-top:50px;	
+	position:absolute; right:0;
+	color:#FFF;
+	text-shadow:0 -1px 2px rgba(0,0,0,.75);
+}
+
+ul#nav li{
+	display:inline-block;	
+}
+
+ul#nav li:after{
+	content:"|";
+	margin: 0 10px;
+}
+
+ul#nav li.last:after{
+	content:none;
+	margin-right:10px;
+}
+
+ul#nav a{color:#FFF;}
+
+
+
+
+
+/* ------------------- Content --------------------- */
+

@@ -1,0 +1,72 @@
+<?php
+
+if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
+
+
+class Article_model extends CI_Model {
+
+
+	protected $_table = 'article';
+
+
+	public function __construct() {
+        parent::__construct();
+    }
+	
+	
+	
+	
+	public function get_author_data($id, $fields = NULL) {
+		if($fields != NULL){
+			return $this->db->select($fields);	
+		}
+
+		return $this->db->where(array('user_id' => $id))->get('user')->row();
+	}
+	
+	
+	public function get_recent(){
+		//return $this->db->order_by('article_date', 'DESC')->limit(5)->get($this->_table)->result();
+		
+		$data = array();
+		$temp = $this->db->select('article_id, user_id, article_title, article_date')->order_by('article_date', 'DESC')->limit(5)->get($this->_table)->result();
+		
+		foreach($temp as $t){
+			$data[$t->article_id]['user'] = $this->get_author_data($t->user_id, NULL);
+			$data[$t->article_id]['content'] = $t; 
+		}
+		
+		return $data;
+	}
+	
+	
+	public function record_count() {
+        return $this->db->count_all($this->_table);
+    }
+	
+	
+	public function get_articles($fields = NULL, $single = FALSE)
+	{
+		if(isset($fields)){
+			$this->db->select($fields);
+		}
+	
+		if($single){
+			$method = 'row';
+		}else{
+			$method = 'result';
+		}
+				
+		return $this->db->get($this->_table)->$method();		
+	}
+	
+	public function get_articles_by($fields, $where, $single){
+		if(isset($where)){
+			$this->db->where($where);
+		}
+		
+		return $this->get_articles($fields, $single);
+	}
+}

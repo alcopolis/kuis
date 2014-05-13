@@ -1,0 +1,21 @@
+form.bordered{
+    border: #ddd 1px solid;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+#article_detail .article_title {
+    margin-bottom: 0px;
+}
+
+#article_detail .article_desc{
+    margin-bottom: 10px;
+}
+
+#article_detail p{
+    text-align: justify;
+}
+
+.has-switch.switch-large {
+    min-width: 200px;
+}

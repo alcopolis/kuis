@@ -1,0 +1,22 @@
+<p id="user-greetings"><?php echo $user_fullname; ?></p>
+
+<div id="user-tools">
+    <a id="create-article" href="<?php echo site_url(); ?>create_article" title="Create article">Create</a>
+    <a id="logout" href="<?php echo site_url(); ?>logout" title="Logout">Logout</a>
+    
+    <br class="clear" />
+    
+    <div id="share-twit"  class="clear" style="margin:10px auto;">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo base_url(); ?>" data-text="Saya sudah ikutan kuis di @InnovateIND. Ikutan yuk, ada hadiah menarik lho! -" data-lang="id" data-size="large" data-count="none" data-dnt="true">Tweet</a>
+        <script>
+            !function(d,s,id){
+                var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+                if(!d.getElementById(id)){
+                    js=d.createElement(s);
+                    js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
+                    fjs.parentNode.insertBefore(js,fjs);
+                }
+            }(document, 'script', 'twitter-wjs');
+        </script>
+    </div>
+</div>
