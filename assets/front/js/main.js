@@ -12,12 +12,19 @@ $(document).ready(function(){
 	
 	$('.tab-nav a').click(function(e){
 		e.preventDefault();
+		
+		//var activeTab = $('.tab-nav a.current').attr('href');
+		//var clickedTab = $(this).attr('href');
+		
 		$('.tab-nav a').removeClass('current');
 		
 		var w = $(this).parent().width();
 		var index = $(this).index();
 		
 		$(this).addClass('current');
+		
+		//$(activeTab).hide().removeClass('active');
+		//$(clickedTab).show().addClass('active');
 		$('.tab-wrapper').css('left', -w*index);
 	})
      
@@ -30,15 +37,8 @@ $(document).ready(function(){
         var MB = 1024 * 1024;
         var size = (file.size / MB).toFixed(2);
         var test = this;
-//        var fileValue = $(test).parent().prev().children('.fileupload-preview');
-//        var fileIcon = $(test).parent().prev().children('.fileupload-exists');
-//        var fileBtnNew = $(test).parent().children('.fileupload-new');
-//        var fileBtnChange = $(test).parent().children('.fileupload-exists');
 
         if (file) {
-//            $(fileBtnNew).css('display', 'none');
-//            $(fileBtnChange).css('display', 'initial');
-//            $(fileIcon).css('display', 'initial');
 
             image = new Image();
 
@@ -69,30 +69,32 @@ $(document).ready(function(){
     });
 
 
-    $(window).scroll(function() {
-
-        var length = $('#article').height();
-        var bottom = $('body').height() - (length + $('#article').offset().top);
-        var scroll = $(this).scrollTop();
-        var windowHeight = $(this).height();
-        var trigger = scroll + windowHeight - (bottom + $('#article').offset().top);
-        var id = $('#article').attr('data-val');
-        var url = siteURL + '/front/view_counter/' + id;
-        if (length === trigger) {
-            alert('youve got the bottom of article');
-            $.ajax({
-                type: 'POST',
-                url: url,
-                cache: false,
-                async: false,
-                success: function(data) {
-                },
-                error: function(data) {
-//                        alert(JSON.stringify(data));
-                }
-            });
-        }
-    });
+    //$(window).scroll(function() {
+//
+//        var length = $('#article').height();
+//        var bottom = $('body').height() - (length + $('#article').offset().top);
+//        var scroll = $(this).scrollTop();
+//        var windowHeight = $(this).height();
+//        var trigger = scroll + windowHeight - (bottom + $('#article').offset().top);
+//        var id = $('#article').attr('data-val');
+//        var url = siteURL + 'front/view_counter/' + id;
+//        
+//		if (length === trigger) {
+//            alert('youve got the bottom of article');
+//            $.ajax({
+//                type: 'POST',
+//                url: url,
+//                cache: false,
+//                async: false,
+//                success: function(data) {
+//					
+//                },
+//                error: function(data) {
+////                        alert(JSON.stringify(data));
+//                }
+//            });
+//        }
+//    });
 })
 
 
@@ -106,7 +108,7 @@ function checkCookie(artID){
 	}
 	
 	if($.inArray(artID, likedArticles) > -1){
-		$('#like-button').hide();
+		$('#like-button').attr('disabled', true).addClass('liked').html('Favorite');
 	}
 }
 
@@ -126,7 +128,23 @@ function processLike(){
 	
 	likedArticles.push(artID);
 
-	document.cookie="liked=" + JSON.stringify(likedArticles); + "; expires=" + expires + "; path=/";
+	
+	var url = siteURL + 'front/like_counter/' + artID;
+	$.ajax({
+		type: 'POST',
+		url: url,
+		processData: false,
+		contentType: false,
+		dataType: 'json',
+		success: function(respond) {
+			if(respond.status){
+				$('#like-button').attr('disabled', true).addClass('liked').html('Favorite');
+				document.cookie="liked=" + JSON.stringify(likedArticles); + "; expires=" + expires + "; path=/";
+			}
+		}
+	});
+
+	
 }
 
 

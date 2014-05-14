@@ -36,7 +36,7 @@ class Front extends CI_Controller {
 		
         $data['title'] = 'Innovate Ceritamu | ';
 		$data['notif'] = NULL;
-		
+		$data['recent_articles'] = $this->article_model->get_recent();
 		$data['page'] = $page;
 		
         if ($this->session->userdata('logged_in')) {
@@ -95,19 +95,33 @@ class Front extends CI_Controller {
 	
 	
 	// View Article
-	public function article($id) {
-		$data['article'] = $this->article_model->get_articles_by('', array('article_id'=>$id), TRUE);
+//	public function article($id) {
+//		$data['article'] = $this->article_model->get_articles_by('', array('article_id'=>$id), TRUE);
+//		$data['author'] = $this->article_model->get_author_data($data['article']->user_id);
+//		$data['recent_articles'] = $this->article_model->get_recent();
+//		
+//		$data['title'] = $data['article']->article_title;
+//		$data['page'] = 'article';
+//		
+//		$sql = "UPDATE article SET view_count=view_count+1 WHERE article_id=" . $id;
+//		$this->db->query($sql);
+//		
+//		$this->render_article('front/index',$data);
+//	}
+	
+	
+	public function article($slug) {
+		$data['article'] = $this->article_model->get_articles_by('', array('article_slug'=>$slug), TRUE);
 		$data['author'] = $this->article_model->get_author_data($data['article']->user_id);
 		$data['recent_articles'] = $this->article_model->get_recent();
 		
 		$data['title'] = $data['article']->article_title;
 		$data['page'] = 'article';
+
 		
-		if ($this->session->userdata('logged_in')) {
-			$data['user_fullname'] = $this->session->userdata['full_name'];
-		}
+		$sql = "UPDATE article SET view_count=view_count+1 WHERE article_slug='" . $slug ."'";
+		$this->db->query($sql);
 		
-		//$this->load->view('front/index', $data);
 		$this->render_article('front/index',$data);
 	}
 	
@@ -134,7 +148,7 @@ class Front extends CI_Controller {
         if ($_FILES['content']['error'] == 0) {
             $status = $this->article_model->upload_pic('./article/');
             if ($status['status'] == TRUE) {
-                $article['gambar'] = $status['img_name'];
+                $article['article_pic'] = $status['img_name'];
             }
         } else if ($_FILES['content']['error'] == 4) {
             $this->session->set_flashdata('notif', 'masukkan file gambar produk terlebih dahulu');
@@ -155,20 +169,20 @@ class Front extends CI_Controller {
         switch ($this->user_model->authenticate_user($this->input->post('email'), $this->input->post('password'))) {
             case 0:
                 $this->session->set_flashdata('notif', 'Email yang Anda masukkan belum terdaftar, silahkan lakukan registrasi terlebih dahulu');
-                redirect('/');
+                redirect(site_url());
                 break;
             case 1:
                 $this->session->set_flashdata('notif', 'Mohon maaf, account Anda belum aktif');
-                redirect('/');
+                redirect(site_url());
                 break;
             case 2:
                 $this->session->set_flashdata('notif', 'Mohon maaf, password yang Anda masukkan salah');
-                redirect('/');
+                redirect(site_url());
                 break;
             case 3:
                 $data = $this->user_model->get_detail_email($this->input->post('email'));
                 $newdata = array(
-                    'id_user' => $data[0]->id_user,
+                    'user_id' => $data[0]->user_id,
                     'full_name' => $data[0]->full_name,
                     'role' => $data[0]->role,
                     'is_active' => $data[0]->is_active,
@@ -177,7 +191,7 @@ class Front extends CI_Controller {
                 $this->session->set_userdata($newdata);
                 $this->session->set_flashdata('notif', 'Selamat datang ' . $this->session->userdata('full_name'));
                 
-                redirect('/');
+                redirect(site_url());
                 break;
         }
     }
@@ -218,4 +232,28 @@ class Front extends CI_Controller {
             redirect('user/dashboard_admin');
         }
     }
+	
+	
+	//-------------------- AJAX Function ------------------------------//
+	
+	public function view_counter($id){
+		//echo $id;
+		//$this->db->update('article', $data, "id = 4");	
+		
+		$sql = "UPDATE article SET view_count=view_count+1 WHERE article_id=" . $id;
+		if($this->db->query($sql)){
+			echo 'success';
+		}
+	}
+	
+	public function like_counter($id){		
+		$sql = "UPDATE article SET like_count=like_count+1 WHERE article_id=" . $id;
+		if($this->db->query($sql)){
+			$respond = array(
+				'status'=>TRUE
+			);
+		
+			echo json_encode($respond);
+		}
+	}
 }

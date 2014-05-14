@@ -29,13 +29,25 @@
 <body>
 	<div class="wrapper">
         <section id="main" class="<?php echo $page; ?> left">
-        
+        	<?php if($this->uri->segment(1) === 'article'){ ?>
+            	<button id="like-button" data-article_id="<?php echo $article->article_id; ?>" value="Like" onclick="processLike()" >Make Favorite</button>
+			<?php } ?>
+            
             <ul id="nav">
             	<li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <li><a href="<?php echo site_url(); ?>articles">Articles</a></li>
-                <li><a href="<?php echo site_url(); ?>about">About</a></li>
+                <li><a href="<?php echo site_url(); ?>articles">Cerita</a></li>
+                <li><a href="<?php echo site_url(); ?>about">Mekanisme</a></li>
             </ul>
             
+            
+            <?php //if (!$this->session->userdata('logged_in')) { ?>
+                <div style="position:absolute; top:95px; right:40px; text-align:center; color:#FFF;" id="social">
+                    <h5 style="padding-bottom:5px; color:#004B76">FOLLOW</h5>
+                    <a target="_blank" href="https://twitter.com/intent/follow?&amp;screen_name=innovateind" id="twitter" class="social-links"><img src="<?php echo base_url('assets/front'); ?>/images/twitter.png" title="Follow Innovate's Twitter" style="width:32px;"/></a>
+                    &nbsp;
+                    <a target="_blank" href="https://www.facebook.com/pages/Innovate/370058633094270?fref=ts" id="fb" class="social-links"><img src="<?php echo base_url('assets/front'); ?>/images/fb.png" title="Follow Innovate's Facebook" style="width:32px;" /></a>
+                </div>
+            <?php //} ?>
             
             <!-- PARTIAL | CONTENT -->
             <div class="content clearfix">
@@ -45,7 +57,7 @@
         
         <aside class="right">
         	<h1 id="logo"><a href="/">Innovate Quad Play</a></h1>
-                        
+               
            	<div id="sider">
             	<!-- PARTIAL | ASIDE -->
                 <div class="aside-content">
@@ -54,19 +66,12 @@
                             $this->load->view('front/partials/login.html', $notif);
                         }else{
 							$this->load->view('front/partials/user_tools.html');
-                            $this->load->view('front/partials/recent_articles.html');
                         }
+						
+						$this->load->view('front/partials/recent_articles.html');
                     ?>
                 </div>
             </div>
-           	
-            <?php if (!$this->session->userdata('logged_in')) { ?>
-                <div style="width:100%; margin-top:80px; text-align:center; color:#FFF;" id="social">
-                    <h6>FOLLOW</h6>
-                    <a target="_blank" href="https://twitter.com/intent/follow?&amp;screen_name=innovateind" id="twitter" class="social-links"><img src="<?php echo base_url('assets/front'); ?>/images/twitter.png" title="Follow Innovate's Twitter" /></a>
-                    <a target="_blank" href="https://www.facebook.com/pages/Innovate/370058633094270?fref=ts" id="fb" class="social-links"><img src="<?php echo base_url('assets/front'); ?>/images/fb.png" title="Follow Innovate's Facebook" /></a>
-                </div>
-            <?php } ?>
         </aside>
     </div>
     <div id="footer" class="wrapper clear">

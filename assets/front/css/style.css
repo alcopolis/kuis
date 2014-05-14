@@ -41,7 +41,7 @@ aside #user-tools{
 	text-align:center;
 	width:84px;	
 	color:#FFF;
-	margin:0 auto;	
+	margin:0 auto 40px auto;	
 }
 
 aside #user-tools a{
@@ -73,8 +73,8 @@ aside #user-tools a#logout{
 	left:140px;
 	width:500px; 
 	height:auto; min-height:100%;
-	margin-top:120px;
-	padding-bottom:20px;
+	margin-top:160px;
+	padding-bottom:40px;
 }
 
 .content > div{position:relative;}
@@ -97,15 +97,38 @@ aside #user-tools a#logout{
 
 /* -- Article List -- */ 
 #articles .article > img{position:relative;}
-#articles .article > .art-details{position:relative; top:-80px; background:rgba(245,245,245,.9); text-shadow:0 1px 1px #FFF;}
+#articles .article > .art-details{position:relative; top:-75px; background:rgba(245,245,245,.9); text-shadow:0 1px 1px #FFF;}
 #articles .article > .art-details .title{}
 #articles .article > .art-details .title a{font-size:12px; font-weight:bold;}
 #articles .article > .art-details .post-meta{color:#777; padding-bottom:10px;}
 
 
 /* -- Article View -- */
-article #article .post-meta{font-size:12px; margin:0px 0 20px 0;}
-article #like-button{border:none; background:#007CC3; font-size:12px; color:#FFF; margin:40px 0 0 0; padding:5px 10px; border-radius:5px; cursor:pointer; box-shadow:0 0 2px #999;}
+article #article .post-meta{font-size:12px; margin:0;}
+article .page-title{color:#1E589A; width:80%; font-size:24px;}
+#like-button{
+	position:absolute;
+	top:120px; right:14px;
+	height:40px;
+	border:none; 
+	background-color:transparent;
+	background-image:url(../images/fav-0.png);
+	background-repeat:no-repeat;
+	background-size:auto 36px;
+	background-position:left top;
+	
+	font-size:12px; 
+	color:#FFF; 
+	margin:40px 0 0 0; 
+	padding:0 10px 5px 50px; 
+	cursor:pointer;
+	z-index:9999; 
+}
+
+#like-button:hover, #like-button.liked{background-image:url(../images/fav-1.png); color:#FF0;}
+#like-button.liked{cursor:default;}
+.article-content{margin-top:40px;}
+.article-content p, .article-content img{padding-bottom:15px;}
  
 
 #paging{
@@ -118,7 +141,7 @@ article #like-button{border:none; background:#007CC3; font-size:12px; color:#FFF
 #paging .nav-arr{font-size:16px; color:#333;}
 #paging a{color:#007DD7;}
 
-.title{padding-top:10px; margin-bottom:0;}
+.title{padding:5px 5px 0; margin-bottom:10px;}
 .post-meta{font-size:12px; color:#777;}
 
 
@@ -126,7 +149,7 @@ article #like-button{border:none; background:#007CC3; font-size:12px; color:#FFF
 
 .aside-content{width:100%; margin:0 auto;}
 .aside-content h2.section-title:before{content:'+ ';}
-.aside-content h2.section-title{font-size:18px; color:#FFF; margin:60px 0 10px 10px; padding:0; font-weight:bold;}
+.aside-content h2.section-title{font-size:18px; color:#FFF; margin:10px 0 10px 10px; padding:0; font-weight:bold;}
 
 #login-register {text-align:center; overflow:hidden;}
 #login-register, #login-register a{color:#FFF; text-decoration:none; text-shadow:0 -1px 1px #333;}
@@ -155,7 +178,7 @@ ul#recent-articles, ul#recent-articles a{color:#007DC3;}
 /* TAB */
 .tab-nav{margin:10px 0; font-size:12px}
 .tab-wrapper{
-	width:480px;
+	width:500px;
 	-webkit-transition: left .5s; /* For Safari 3.1 to 6.0 */
 	transition: left .5s;
 	position:relative;
@@ -163,8 +186,10 @@ ul#recent-articles, ul#recent-articles a{color:#007DC3;}
 }
 .tab-wrapper .tab{
 	float:left;	
-	width:240px;
+	width:250px;
 }
+
+.tab-wrapper .tab.active{}
 
 
 

@@ -7,12 +7,11 @@
         </div>
         
         <div class="article-content">
-            <img src="http://lorempixel.com/200/200/people" style="float:left; margin:0 15px 0 0;" />
+            <img src="<?php echo base_url(); ?>article/<?php echo $article->article_pic; ?>" style="float:left; margin:0 15px 0 0;" />
             <div><?php echo $article->article_body; ?></div>
         </div>
     </div>
     
-    <button id="like-button" data-article_id="<?php echo $article->article_id; ?>" value="Like" onclick="processLike()" >Like This Story</button>
 </article>
 
 <script type="text/javascript">
