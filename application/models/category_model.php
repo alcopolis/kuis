@@ -13,7 +13,7 @@ class Category_model extends CI_Model {
 
     public function get_detail($id) {
         $query = $this->db->get_where('category', array('category_id' => $id));
-        return $query->result();
+        return $query->row();
     }
 	
 	public function get_category_drop(){

@@ -16,6 +16,7 @@ class Front extends CI_Controller {
 		$this->load->model('article_model');
         $this->load->model('category_model');
 		$this->load->library('pagination');
+		$this->load->helper('cookie');
     }
 	
 	
@@ -81,9 +82,10 @@ class Front extends CI_Controller {
 		foreach($temp as $t){
 			$art_data[$t->article_id]['user'] = $this->article_model->get_author_data($t->user_id, NULL);
 			$art_data[$t->article_id]['content'] = $t; 
+			$art_data[$t->article_id]['fav_state'] =  $this->check_favorite($t->article_id);
 		}
 		
-		
+		$data['art_cookies'] = get_cookie('liked');
 		$data['articles'] = $art_data;
 		$data["paging_links"] = $this->pagination->create_links();
 		
@@ -94,30 +96,15 @@ class Front extends CI_Controller {
 	
 	
 	
-	// View Article
-//	public function article($id) {
-//		$data['article'] = $this->article_model->get_articles_by('', array('article_id'=>$id), TRUE);
-//		$data['author'] = $this->article_model->get_author_data($data['article']->user_id);
-//		$data['recent_articles'] = $this->article_model->get_recent();
-//		
-//		$data['title'] = $data['article']->article_title;
-//		$data['page'] = 'article';
-//		
-//		$sql = "UPDATE article SET view_count=view_count+1 WHERE article_id=" . $id;
-//		$this->db->query($sql);
-//		
-//		$this->render_article('front/index',$data);
-//	}
-	
-	
 	public function article($slug) {
 		$data['article'] = $this->article_model->get_articles_by('', array('article_slug'=>$slug), TRUE);
 		$data['author'] = $this->article_model->get_author_data($data['article']->user_id);
+		$data['category'] = $this->category_model->get_detail($data['article']->category_id);
 		$data['recent_articles'] = $this->article_model->get_recent();
 		
 		$data['title'] = $data['article']->article_title;
 		$data['page'] = 'article';
-
+		$data['fav_state'] = $this->check_favorite($data['article']->article_id);
 		
 		$sql = "UPDATE article SET view_count=view_count+1 WHERE article_slug='" . $slug ."'";
 		$this->db->query($sql);
@@ -138,7 +125,7 @@ class Front extends CI_Controller {
 
     public function save_article() {
         $article = array(
-            'article_title' => $this->input->post('article_title'),
+            'article_title' => ucfirst($this->input->post('article_title')),
             'article_slug' => str_replace(' ', '_', $this->input->post('article_title')),
             'article_desc' => $this->input->post('article_desc'),
             'article_body' => $this->input->post('article_body'),
@@ -152,18 +139,21 @@ class Front extends CI_Controller {
             }
         } else if ($_FILES['content']['error'] == 4) {
             $this->session->set_flashdata('notif', 'masukkan file gambar produk terlebih dahulu');
-            redirect('front/create_article');
+            redirect('create_article');
         } else {
             $this->session->set_flashdata('notif', 'File gambar produk rusak');
-            redirect('front/create_article');
+            redirect('create_article');
         }
         $id = NULL;
         if ($this->article_model->save($id, $article)) {
-            redirect('front/create_article');
+            redirect($this->input->post('last_viewed'));
         } else {
-            redirect('front/create_article');
+            redirect('create_article');
         }
     }
+	
+	
+	
 	
 	public function login() {
         switch ($this->user_model->authenticate_user($this->input->post('email'), $this->input->post('password'))) {
@@ -236,10 +226,41 @@ class Front extends CI_Controller {
 	
 	//-------------------- AJAX Function ------------------------------//
 	
-	public function view_counter($id){
-		//echo $id;
-		//$this->db->update('article', $data, "id = 4");	
+	public function set_favorite($id){
+		$liked = $this->get_favorite();
+		$liked[] = $id;
 		
+		$cookie = array(
+                   'name'   => 'liked',
+                   'value'  => json_encode($liked),
+                   'expire' => 60*60*60*24*30,
+                   'domain' => '.kuis.com',
+                   'path'   => '/',
+               );
+		
+		set_cookie($cookie); 
+		
+		$respond['status'] = TRUE;
+		echo json_encode($respond); 
+	}
+	
+	private function get_favorite(){
+		$result = get_cookie('liked');
+		
+		if($result != ''){
+			return json_decode($result);
+		}else{
+			return FALSE;
+		}
+	}
+	
+	private function check_favorite($id){
+		$liked = $this->get_favorite();
+		return in_array($id, $liked);	
+	}
+	
+	
+	public function view_counter($id){		
 		$sql = "UPDATE article SET view_count=view_count+1 WHERE article_id=" . $id;
 		if($this->db->query($sql)){
 			echo 'success';

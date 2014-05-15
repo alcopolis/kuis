@@ -3,19 +3,13 @@
     
     <div id="<?php echo $page; ?>" data-val="<?php echo $article->article_id; ?>" class="clearfix"> 
         <div class="post-meta">
-            by <?php echo $author->full_name; ?> | <?php echo date('d M Y', strtotime($article->article_date)); ?>
+            By <?php echo $author->full_name; ?> | <?php echo date('d M Y', strtotime($article->article_date)); ?><br/>
+            <?php echo $category->category_name; ?>
         </div>
         
         <div class="article-content">
-            <img src="<?php echo base_url(); ?>article/<?php echo $article->article_pic; ?>" style="float:left; margin:0 15px 0 0;" />
-            <div><?php echo $article->article_body; ?></div>
+            <img src="<?php echo base_url(); ?>article/<?php echo $article->article_pic; ?>" />
+            <div id="story"><?php echo $article->article_body; ?></div>
         </div>
     </div>
-    
 </article>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		checkCookie(<?php echo $article->article_id; ?>);
-	});
-</script>

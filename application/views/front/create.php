@@ -30,7 +30,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="create_article">
                         <input type="text" name="article_title" id="article_title" placeholder="Title" maxlength="50" style="width:400px;"/>
                         <?php
-                        echo form_dropdown('category_id', $category_drop, '');
+                        	echo form_dropdown('category_id', $category_drop, '');
                         ?>
                         <textarea name="article_desc" rows="5" cols="80" placeholder="Deskripsi"></textarea>
                         <textarea id="article_body" name="article_body"></textarea>
