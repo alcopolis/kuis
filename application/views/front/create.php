@@ -26,17 +26,47 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 
 
                 <h1 class="page-title">+ Create Article</h1>
-                <div id="create-article" class="clearfix">    
-                    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="create_article">
-                        <input type="text" name="article_title" id="article_title" placeholder="Title" maxlength="50" style="width:400px;"/>
-                        <?php
-                        echo form_dropdown('category_id', $category_drop, '');
-                        ?>
-                        <textarea name="article_desc" rows="5" cols="80" placeholder="Deskripsi"></textarea>
-                        <textarea id="article_body" name="article_body"></textarea>
-                        <input type="file" name="content" class="article_pic" />
-                        <input type="submit" value="Submit"> <input type="button" name="cancel" value="Cancel">
-                        <input type="hidden" value="<?php echo $previous ?>" name="last_viewed" />
+                <div id="create-article" class="">    
+                    <form class="form-horizontal" role="form" action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="create_article">
+                        <div class="form-group clearfix">
+                            <label for="article_title" class="col-sm-2 control-label">Judul Artikel</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="article_title" id="article_title" placeholder="Title" class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label for="category_id" class="col-sm-2 control-label">Kategori</label>
+                            <div class="col-sm-8">
+                                <?php
+                                echo form_dropdown('category_id', $category_drop, '', 'class="form-control" id="category_id"');
+                                ?>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label for="article_desc" class="col-sm-2 control-label">Deskripsi Artikel</label>
+                            <div class="col-sm-8">
+                                <textarea name="article_desc" id="article_desc" rows="5" placeholder="Deskripsi" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label for="article_body" class="col-sm-2 control-label">Isi Artikel</label>
+                            <div class="col-sm-8">
+                                <textarea id="article_body" name="article_body" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label for="" class="col-sm-2 control-label">Gambar Artikel</label>
+                            <div class="col-sm-8">
+                                <input type="file" name="content" class="form-control article_pic" />
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                            <div class="col-sm-8">
+                                <input type="submit" id="submit_article" value="Submit"> <input type="button" name="cancel" value="Cancel">
+                                <input type="hidden" value="<?php echo $previous ?>" name="last_viewed" />
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

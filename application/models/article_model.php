@@ -4,69 +4,59 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-
 class Article_model extends CI_Model {
 
+    protected $_table = 'article';
 
-	protected $_table = 'article';
-
-
-	public function __construct() {
+    public function __construct() {
         parent::__construct();
     }
-	
-	
-	
-	
-	public function get_author_data($id, $fields = NULL) {
-		if($fields != NULL){
-			return $this->db->select($fields);	
-		}
 
-		return $this->db->where(array('user_id' => $id))->get('user')->row();
-	}
-	
-	
-	public function get_recent(){		
-		$data = array();
-		$temp = $this->db->order_by('article_date', 'DESC')->limit(5)->get($this->_table)->result();
-		
-		foreach($temp as $t){
-			$data[$t->article_id]['user'] = $this->get_author_data($t->user_id, NULL);
-			$data[$t->article_id]['content'] = $t; 
-		}
-		
-		return $data;
-	}
-	
-	
-	public function record_count() {
+    public function get_author_data($id, $fields = NULL) {
+        if ($fields != NULL) {
+            return $this->db->select($fields);
+        }
+
+        return $this->db->where(array('user_id' => $id))->get('user')->row();
+    }
+
+    public function get_recent() {
+        $data = array();
+        $temp = $this->db->order_by('article_date', 'DESC')->limit(5)->get($this->_table)->result();
+
+        foreach ($temp as $t) {
+            $data[$t->article_id]['user'] = $this->get_author_data($t->user_id, NULL);
+            $data[$t->article_id]['content'] = $t;
+        }
+
+        return $data;
+    }
+
+    public function record_count() {
         return $this->db->count_all($this->_table);
     }
-	
-	
-	public function get_articles($fields = NULL, $single = FALSE)
-	{
-		if(isset($fields)){
-			$this->db->select($fields);
-		}
-	
-		if($single){
-			$method = 'row';
-		}else{
-			$method = 'result';
-		}
-				
-		return $this->db->get($this->_table)->$method();		
-	}
-	
-	public function get_articles_by($fields, $where, $single){
-		if(isset($where)){
-			$this->db->where($where);
-		}
-		
-		return $this->get_articles($fields, $single);
-	}
+
+    public function get_articles($fields = NULL, $single = FALSE) {
+        if (isset($fields)) {
+            $this->db->select($fields);
+        }
+
+        if ($single) {
+            $method = 'row';
+        } else {
+            $method = 'result';
+        }
+
+        return $this->db->get($this->_table)->$method();
+    }
+
+    public function get_articles_by($fields, $where, $single) {
+        if (isset($where)) {
+            $this->db->where($where);
+        }
+
+        return $this->get_articles($fields, $single);
+    }
 
     public function get_all() {
         $query = $this->db->get('article');
@@ -202,6 +192,20 @@ class Article_model extends CI_Model {
             $this->session->set_flashdata('notif', 'File gagal di upload');
         }
         return $data;
+    }
+
+    function toAscii($str, $replace = array(), $delimiter = '_') {
+        setlocale(LC_ALL, 'en_US.UTF8');
+        if (!empty($replace)) {
+            $str = str_replace((array) $replace, ' ', $str);
+        }
+
+        $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+        $clean1 = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);
+        $clean2 = strtolower(trim($clean1, '-'));
+        $clean3 = preg_replace("/[\/_|+ -]+/", $delimiter, $clean2);
+
+        return $clean3;
     }
 
 }

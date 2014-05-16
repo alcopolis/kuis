@@ -1,22 +1,31 @@
 $(document).ready(function() {
-    $('#create_article').validate({
-        ignore: [],
-        rules: {
-            article_title: {
-                required: true
-            },
-            article_body: {
-                required: true,
-                minlength: 1500
-            },
-            article_desc: {
-                required: true
-            },
-            category_id: {
-                required: true
-            }
-        },
-        messages: {
+    $('#submit_article').click(function() {
+        var conf = confirm('Are you sure ?');
+        if (conf) {
+            $('#create_article').validate({
+                ignore: [],
+                rules: {
+                    article_title: {
+                        required: true
+                    },
+                    article_body: {
+                        required: function(textarea) {
+                            CKEDITOR.instances[textarea.id].updateElement(); // update textarea
+                            var editorcontent = textarea.value.replace(/<[^>]*>/gi, ''); // strip tags
+                            return editorcontent.length === 0;
+                        },
+                        minlength: 1500
+                    },
+                    article_desc: {
+                        required: true
+                    },
+                    category_id: {
+                        required: true
+                    }
+                },
+                messages: {
+                }
+            });
         }
     });
 });
