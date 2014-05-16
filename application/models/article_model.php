@@ -116,6 +116,13 @@ class Article_model extends CI_Model {
                 $data = TRUE;
             }
         } else { //update the profile
+            $result = $this->get_detail($id);
+            if ($result[0]->article_pic != '') {
+                $file_url = './article/' . $result[0]->article_pic;
+                $file_url1 = './article/thumbnail' . $result[0]->article_pic;
+                unlink($file_url);
+                unlink($file_url1);
+            }
             $this->db->where('article_id', $id);
             if ($this->db->update('article', $data)) {
                 $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
@@ -206,6 +213,24 @@ class Article_model extends CI_Model {
         $clean3 = preg_replace("/[\/_|+ -]+/", $delimiter, $clean2);
 
         return $clean3;
+    }
+
+    public function delete($id) {
+        $result = $this->get_detail($id);
+        if (count($result) > 0) {
+            if ($result[0]->article_pic != '') {
+                $file_url = './article/' . $result[0]->article_pic;
+                $file_url1 = './article/thumbnail/' . $result[0]->article_pic;
+                unlink($file_url);
+                unlink($file_url1);
+            }
+            $this->db->trans_start();
+            $this->db->query('DELETE FROM article WHERE article_id=' . $id);
+            $this->db->trans_complete();
+            $data = $this->db->trans_status();
+
+            return $data;
+        }
     }
 
 }

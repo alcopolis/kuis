@@ -4,7 +4,7 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Article extends CI_Controller {
+class Admin_article extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -58,7 +58,7 @@ class Article extends CI_Controller {
     public function edit($id) {
         $data['notif'] = $this->session->flashdata('notif');
         $data['page'] = 'article';
-        $data['action'] = site_url('article/update');
+        $data['action'] = site_url('admin_article/update');
         $data['article_detail'] = $this->article_model->get_detail_article($id);
         $data['title'] = 'Edit Artikel';
         $data['view'] = 'admin/article_edit';
@@ -75,9 +75,9 @@ class Article extends CI_Controller {
         );
         $id = $this->input->post('user_id');
         if ($this->article_model->save($id, $article)) {
-            redirect('article/detail/' . $id);
+            redirect('admin_article/detail/' . $id);
         } else {
-            redirect('article/edit/' . $id);
+            redirect('admin_article/edit/' . $id);
         }
     }
 
