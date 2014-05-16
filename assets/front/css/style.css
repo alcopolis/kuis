@@ -142,9 +142,10 @@ article .page-title{color:#1E589A; width:80%; font-size:24px;}
 	color:#333;
 	font-size:12px;
 }
-#paging *{margin:0 5px;}
-#paging .nav-arr{font-size:16px; color:#333;}
-#paging a{color:#007DD7;}
+#paging *{margin:0 1px 0 0; font-size:12px; background:#039; padding:1px 5px; border-radius:2px;color:#FFF}
+#paging a, #paging a span.nav-arr{color:#A8D2FF;}
+#paging a:hover, #paging a:hover span.nav-arr{color:#FFF;}
+#paging a span{margin:0; padding:0;}
 
 .title{padding:5px 5px 0; margin-bottom:10px;}
 .post-meta{font-size:12px; color:#777;}

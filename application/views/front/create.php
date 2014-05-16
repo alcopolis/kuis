@@ -28,7 +28,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                 <h1 class="page-title">+ Create Article</h1>
                 <div id="create-article" class="clearfix">    
                     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="create_article">
-                        <input type="text" name="article_title" id="article_title" placeholder="Title" maxlength="50" style="width:400px;"/>
+                        <input type="text" name="article_title" id="article_title" placeholder="Title" maxlength="100" style="width:400px;"/>
                         <?php
                         	echo form_dropdown('category_id', $category_drop, '');
                         ?>

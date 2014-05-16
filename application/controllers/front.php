@@ -62,10 +62,10 @@ class Front extends CI_Controller {
 		$config["uri_segment"] = 2;
 		$config['num_links'] = 5;
 		$config['use_page_numbers'] = TRUE;
-		$config['first_link'] = '<span id="first-page" class="nav-arr"><<</span>';
-		$config['last_link'] = '<span id="first-page" class="nav-arr">>></span>';
-		$config['next_link'] = '<span id="next-page" class="nav-arr">></span>';
-		$config['prev_link'] = '<span id="prev-page" class="nav-arr"><</span>';
+		//$config['first_link'] = '<span id="first-page" class="nav-arr"><<</span>';
+		//$config['last_link'] = '<span id="first-page" class="nav-arr">>></span>';
+		$config['next_link'] = '<span id="next-page" class="nav-arr">Next</span>';
+		$config['prev_link'] = '<span id="prev-page" class="nav-arr">Prev</span>';
 		
 		$this->pagination->initialize($config); 
 		
@@ -125,8 +125,8 @@ class Front extends CI_Controller {
 
     public function save_article() {
         $article = array(
-            'article_title' => ucfirst($this->input->post('article_title')),
-            'article_slug' => str_replace(' ', '_', $this->input->post('article_title')),
+            'article_title' => ucwords($this->input->post('article_title')),
+            'article_slug' => str_replace(' ', '_', strtolower($this->input->post('article_title'))),
             'article_desc' => $this->input->post('article_desc'),
             'article_body' => $this->input->post('article_body'),
             'category_id' => $this->input->post('category_id'),
@@ -156,18 +156,21 @@ class Front extends CI_Controller {
 	
 	
 	public function login() {
+		$last_viewed_page = $this->input->post('last_viewed');
+		var_dump($last_viewed_page);
+		
         switch ($this->user_model->authenticate_user($this->input->post('email'), $this->input->post('password'))) {
             case 0:
                 $this->session->set_flashdata('notif', 'Email yang Anda masukkan belum terdaftar, silahkan lakukan registrasi terlebih dahulu');
-                redirect(site_url());
+                redirect($last_viewed_page);
                 break;
             case 1:
                 $this->session->set_flashdata('notif', 'Mohon maaf, account Anda belum aktif');
-                redirect(site_url());
+                redirect($last_viewed_page);
                 break;
             case 2:
                 $this->session->set_flashdata('notif', 'Mohon maaf, password yang Anda masukkan salah');
-                redirect(site_url());
+                redirect($last_viewed_page);
                 break;
             case 3:
                 $data = $this->user_model->get_detail_email($this->input->post('email'));
@@ -181,12 +184,13 @@ class Front extends CI_Controller {
                 $this->session->set_userdata($newdata);
                 $this->session->set_flashdata('notif', 'Selamat datang ' . $this->session->userdata('full_name'));
                 
-                redirect(site_url());
+                redirect($last_viewed_page);
                 break;
         }
     }
 	
 	public function logout() {
+		
         $this->session->unset_userdata();
         $this->session->sess_destroy();
         redirect('/');
@@ -240,6 +244,8 @@ class Front extends CI_Controller {
 		
 		set_cookie($cookie); 
 		
+		$this->like_counter($id);
+		
 		$respond['status'] = TRUE;
 		echo json_encode($respond); 
 	}
@@ -247,7 +253,7 @@ class Front extends CI_Controller {
 	private function get_favorite(){
 		$result = get_cookie('liked');
 		
-		if($result != ''){
+		if($result != NULL){
 			return json_decode($result);
 		}else{
 			return FALSE;
@@ -256,7 +262,9 @@ class Front extends CI_Controller {
 	
 	private function check_favorite($id){
 		$liked = $this->get_favorite();
-		return in_array($id, $liked);	
+		if($liked != NULL){
+			return in_array($id, $liked);	
+		}
 	}
 	
 	
@@ -269,12 +277,6 @@ class Front extends CI_Controller {
 	
 	public function like_counter($id){		
 		$sql = "UPDATE article SET like_count=like_count+1 WHERE article_id=" . $id;
-		if($this->db->query($sql)){
-			$respond = array(
-				'status'=>TRUE
-			);
-		
-			echo json_encode($respond);
-		}
+		$this->db->query($sql);
 	}
 }
