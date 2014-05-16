@@ -126,10 +126,12 @@ class Front extends CI_Controller {
     public function save_article() {
         $article = array(
             'article_title' => ucwords($this->input->post('article_title')),
-            'article_slug' => str_replace(' ', '_', strtolower($this->input->post('article_title'))),
+            'article_slug' => $this->article_model->toAscii(strtolower($this->input->post('article_title')), "'", '_'),
             'article_desc' => $this->input->post('article_desc'),
             'article_body' => $this->input->post('article_body'),
             'category_id' => $this->input->post('category_id'),
+			'provider' => $this->input->post('provider'),
+			'usage' => $this->input->post('usage'),
             'user_id' => $this->session->userdata('user_id')
         );
         if ($_FILES['content']['error'] == 0) {
@@ -146,7 +148,7 @@ class Front extends CI_Controller {
         }
         $id = NULL;
         if ($this->article_model->save($id, $article)) {
-            redirect($this->input->post('last_viewed'));
+            redirect('article/' . $article['article_slug']);
         } else {
             redirect('create_article');
         }
@@ -157,7 +159,6 @@ class Front extends CI_Controller {
 	
 	public function login() {
 		$last_viewed_page = $this->input->post('last_viewed');
-		var_dump($last_viewed_page);
 		
         switch ($this->user_model->authenticate_user($this->input->post('email'), $this->input->post('password'))) {
             case 0:

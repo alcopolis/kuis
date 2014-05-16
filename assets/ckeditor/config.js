@@ -38,7 +38,7 @@ CKEDITOR.editorConfig = function(config) {
 
 
     // Extra Plugins
-    config.extraPlugins = 'autosave';
+    //config.extraPlugins = 'autosave';
     config.extraPlugins = 'textselection';
 
     config.extraPlugins = 'wordcount';

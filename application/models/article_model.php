@@ -203,5 +203,20 @@ class Article_model extends CI_Model {
         }
         return $data;
     }
+	
+	
+	function toAscii($str, $replace = array(), $delimiter = '_') {
+        setlocale(LC_ALL, 'en_US.UTF8');
+        if (!empty($replace)) {
+            $str = str_replace((array) $replace, ' ', $str);
+        }
+
+        $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+        $clean1 = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);
+        $clean2 = strtolower(trim($clean1, '-'));
+        $clean3 = preg_replace("/[\/_|+ -]+/", $delimiter, $clean2);
+
+        return $clean3;
+    }
 
 }
