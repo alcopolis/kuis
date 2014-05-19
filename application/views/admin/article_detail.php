@@ -59,7 +59,7 @@ $article = $article_detail[0];
                                 <?php
                             }
                             ?>
-                            <a href="<?php echo site_url('article/edit/' . $article->article_id); ?>" class="btn btn-info btn-squared btn-lg">
+                            <a href="<?php echo site_url('admin_article/edit/' . $article->article_id); ?>" class="btn btn-info btn-squared btn-lg">
                                 Edit <i class="icon-circle-arrow-right"></i>
                             </a>
                         </div>

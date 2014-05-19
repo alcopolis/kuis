@@ -1,5 +1,6 @@
 // JavaScript Document
 
+<<<<<<< HEAD
 $(document).ready(function(){
 	var navTotal = $('ul#nav li').length;
 	$('ul#nav').css('width', 70*navTotal);
@@ -18,7 +19,7 @@ $(document).ready(function(){
 		$(this).addClass('current');
 		$('.tab-wrapper').css('left', -w*index);
 	})
-     
+	
 
     var _URL = window.URL || window.webkitURL;
 
@@ -78,6 +79,3 @@ function processLike(){
 		}
 	});
 }
-
-
-//-------------------------------------------------//

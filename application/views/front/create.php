@@ -25,8 +25,10 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                 <?php } ?>
 
 
+
                 <h1 class="page-title" style="margin-left:180px;">+ Create Article</h1>
                 <div id="create-article" style="margin-top:20px;">    
+
                     <form class="form-horizontal" role="form" action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="create_article">
                         <div class="form-group clearfix">
                             <label for="article_title" class="col-sm-2 control-label">Judul Artikel</label>

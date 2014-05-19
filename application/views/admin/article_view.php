@@ -28,6 +28,7 @@
                             <th>Tanggal</th>
                             <th>Status</th>
                             <th>View Count</th>
+                            <th>Fav Count</th>
                             <th width="10%"></th>
                         </tr>
                     </thead>
@@ -45,8 +46,9 @@
                                     <td><?php echo $row->article_date; ?></td>
                                     <td><?php echo $row->article_status; ?></td>
                                     <td><?php echo $row->view_count; ?></td>
+                                    <td><?php echo $row->like_count; ?></td>
                                     <td>
-                                        <a href="<?php echo site_url('article/detail/' . $row->article_id); ?>"><i class="icon-eye-open"></i></a>
+                                        <a href="<?php echo site_url('admin_article/detail/' . $row->article_id); ?>"><i class="icon-eye-open"></i></a>
                                         <a class="article_delete" data-val="<?php echo $row->article_id; ?>"><i class="icon-trash"></i></a>
                                     </td>
                                 </tr>

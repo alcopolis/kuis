@@ -15,15 +15,15 @@ class Category_model extends CI_Model {
         $query = $this->db->get_where('category', array('category_id' => $id));
         return $query->row();
     }
-	
-	public function get_category_drop(){
-		$category = $this->get_all();
-			$res[''] = '== Pilih Kategori ==';
-		foreach ($category as $row){
-			$res[$row->category_id] = $row->category_name;
-		}
-		return $res;
-	}
+
+    public function get_category_drop() {
+        $category = $this->get_all();
+        $res[''] = '== Pilih Kategori ==';
+        foreach ($category as $row) {
+            $res[$row->category_id] = $row->category_name;
+        }
+        return $res;
+    }
 
     public function save($id, $data) {
         if ($id == NULL) { //save the profile
