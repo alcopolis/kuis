@@ -17,7 +17,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 
     <body style="background:#333">
         <div class="wrapper">
-            <div class="content clearfix" style="width:100%;left:auto; color:#FFF;">
+            <div class="content clearfix" style="width:100%;left:auto; color:#FFF; margin-top:80px;">
                 <?php if ($notif != NULL) { ?>
                     <div id="notif" style="font-size:12px; color:#F00; padding:10px; margin:10px 0; text-shadow:none; background:#FFF;">
                         <?php echo $notif; ?>
@@ -45,11 +45,11 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                             </div>
                             <label for="provider" class="col-sm-2 control-label">Provider</label>
                             <div class="col-sm-8">
-                                <input type="text" name="provider" id="provider" class="form-control" style="width:280px"/>
+                                <input type="text" name="provider" id="provider" class="form-control" style="width:280px"/>&nbsp;&nbsp;&nbsp;<em style="font-size:11px;">Data tidak akan dipublikasikan</em>
                             </div>
                             <label for="usage" class="col-sm-2 control-label">Speed / Jumlah Channel</label>
                             <div class="col-sm-8">
-                                <input type="text" name="usage" id="usage" class="form-control" style="width:280px"/>
+                                <input type="text" name="usage" id="usage" class="form-control" style="width:280px"/>&nbsp;&nbsp;&nbsp;<em style="font-size:11px;">Data tidak akan dipublikasikan</em>
                             </div>
                         </div>
                         <div class="form-group clearfix">
@@ -70,9 +70,11 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                                 <input type="file" name="content" class="form-control article_pic" />
                             </div>
                         </div>
+                        
                         <div class="form-group clearfix">
                             <label for="inputEmail3" class="col-sm-2 control-label"></label>
                             <div class="col-sm-8">
+                            	<p style="margin-top:20px; font-size:11px;">Dengan klik tombol Submit, peserta bersedia mengikuti <a href="about" style="color:#97c8ff">syarat dan ketentuan</a> kuis yang berlaku.</p>
                                 <input type="submit" id="submit_article" value="Submit"> <input type="button" name="cancel" value="Cancel">
                                 <input type="hidden" value="<?php echo $previous ?>" name="last_viewed" />
                             </div>

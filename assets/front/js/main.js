@@ -1,6 +1,5 @@
 // JavaScript Document
 
-<<<<<<< HEAD
 $(document).ready(function(){
 	var navTotal = $('ul#nav li').length;
 	$('ul#nav').css('width', 70*navTotal);

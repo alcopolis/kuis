@@ -47,48 +47,6 @@ class Front extends CI_Controller {
 
         $this->load->view('front/index', $data);
     }
-
-    // View All Articles 
-    public function articles() {
-        $data['page'] = 'articles';
-        $data['title'] = 'Innovate Ceritamu | ';
-
-        $config['base_url'] = base_url() . 'articles';
-        $config['total_rows'] = $this->article_model->record_count();
-        $config['per_page'] = 12;
-        $config["uri_segment"] = 2;
-        $config['num_links'] = 5;
-        $config['use_page_numbers'] = TRUE;
-        $config['first_link'] = '<span id="first-page" class="nav-arr"><<</span>';
-        $config['last_link'] = '<span id="first-page" class="nav-arr">>></span>';
-        $config['next_link'] = '<span id="next-page" class="nav-arr">></span>';
-        $config['prev_link'] = '<span id="prev-page" class="nav-arr"><</span>';
-
-        $this->pagination->initialize($config);
-
-        $paging_page = ($this->uri->segment($config["uri_segment"])) ? $this->uri->segment($config["uri_segment"]) : 0;
-        if ($paging_page <= 1) {
-            $start = 0;
-        } else {
-            $start = ($paging_page - 1) * $config['per_page'];
-        }
-
-        $art_data = array();
-        $temp = $this->db->order_by('article_date', 'DESC')->limit($config['per_page'], $start)->get('article')->result();
-
-        foreach ($temp as $t) {
-            $art_data[$t->article_id]['user'] = $this->article_model->get_author_data($t->user_id, NULL);
-            $art_data[$t->article_id]['content'] = $t;
-        }
-
-
-        $data['articles'] = $art_data;
-        $data["paging_links"] = $this->pagination->create_links();
-
-        $data['recent_articles'] = $this->article_model->get_recent();
-
-        $this->render_article('front/index', $data);
-    }
 	
 	
 	// View All Articles 
@@ -153,21 +111,6 @@ class Front extends CI_Controller {
 	}
 
 
-    public function article($slug) {
-        $data['article'] = $this->article_model->get_articles_by('', array('article_slug' => $slug), TRUE);
-        $data['author'] = $this->article_model->get_author_data($data['article']->user_id);
-        $data['recent_articles'] = $this->article_model->get_recent();
-
-        $data['title'] = $data['article']->article_title;
-        $data['page'] = 'article';
-
-
-        $sql = "UPDATE article SET view_count=view_count+1 WHERE article_slug='" . $slug . "'";
-        $this->db->query($sql);
-
-        $this->render_article('front/index', $data);
-    }
-
     public function create_article() {
         $data['notif'] = $this->session->flashdata('notif');
         $data['title'] = 'Innovate Ceritamu | ';
@@ -214,7 +157,7 @@ class Front extends CI_Controller {
 	public function login() {
 		$last_viewed_page = $this->input->post('last_viewed');
 		
-        switch ($this->user_model->authenticate_user($this->input->post('email'), $this->input->post('password'))) {
+        switch ($this->user_model->authenticate_user($this->input->post('email'), $this->input->post('pwd'))) {
             case 0:
                 $this->session->set_flashdata('notif', 'Email yang Anda masukkan belum terdaftar, silahkan lakukan registrasi terlebih dahulu');
                 redirect($last_viewed_page);

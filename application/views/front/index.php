@@ -40,7 +40,7 @@
             <ul id="nav">
             	<li><a href="<?php echo base_url(); ?>">Home</a></li>
                 <li><a href="<?php echo site_url(); ?>articles">Cerita</a></li>
-                <li><a href="<?php echo site_url(); ?>about">Mekanisme</a></li>
+                <li class="last"><a href="<?php echo site_url(); ?>about">Mekanisme</a></li>
             </ul>
             
             
@@ -78,7 +78,7 @@
             </div>
         </aside>
     </div>
-    <div id="footer" class="wrapper clear">
+    <div id="footer" class="wrapper clear" style="padding-left:30px;">
     	Copyright &copy; <?php echo date('Y'); ?> Innovate - All Rights Reserved.
     </div>
 </body>

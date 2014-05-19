@@ -1,4 +1,4 @@
-<div id="login-register" style="margin-top:40px; padding-bottom:10px; border-top:1px solid rgba(255,255,255,.5); border-bottom:3px solid rgba(255,255,255,.35);">
+<div id="login-register" style="margin-top:40px; padding-bottom:10px; border-bottom:3px solid rgba(255,255,255,.35);">
     <div class="tab-nav"><a href="#login" class="current">Login</a> | <a href="#register">Daftar</a></div>
     
     <div class="tab-wrapper clearfix">
@@ -6,7 +6,7 @@
         	<p style="margin:10px 0; font-size:12px"></p>
             <form action="<?php echo site_url(); ?>front/login" method="post">
                 <input type="text" name="email" placeholder="Email" /> <br/>
-                <input type="password" name="password" placeholder="Password" /><br/> 
+                <input type="password" name="pwd" placeholder="Password" /><br/> 
                 <input type="hidden" value="<?php echo $this->uri->uri_string(); ?>" name="last_viewed" /> 
                 <input type="submit" value="Masuk" />                   
             </form>
@@ -16,7 +16,7 @@
             <form action="<?php echo site_url(); ?>front/register" method="post">
                 <input type="text" name="full_name" placeholder="Full Name" /><br/>
                 <input type="text" name="email" placeholder="Email" /><br/>
-                <input type="password" name="password" placeholder="Password" /><br/>  
+                <input type="password" name="pwd" placeholder="Password" /><br/>  
                 <input type="password" name="confirm" placeholder="Confirm Password" /><br/> 
                 <input type="hidden" value="<?php echo $this->uri->uri_string(); ?>" name="last_viewed" />
                 <input type="submit" value="Daftar" />                    
@@ -25,7 +25,7 @@
     </div>
     
     <?php if($notif != NULL){ ?>
-        <div id="notif" style="font-size:12px; color:#F00; padding:10px 0; margin:10px 0; background:#FFF; text-shadow:none;">
+        <div id="notif" style="font-size:12px; color:#FFF; margin:10px 0; text-shadow:none;">
             <?php echo $notif; ?>
         </div>	
     <?php } ?>
