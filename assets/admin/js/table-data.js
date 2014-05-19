@@ -98,6 +98,35 @@ var TableData = function() {
             return false;
         });
 
+        $('.article_delete').click(function() {
+            var id = $(this).attr('data-val');
+            var conf = confirm('Continue delete?');
+            if (conf)
+                $(this).parents('tr').fadeOut(function() {
+                    $.post(siteURL + "/admin_article/delete", {
+                        id: id
+                    })
+                            .done(function(data) {
+                                if (data === 'success') {
+                                    $(function() {
+                                        setTimeout(function() {
+                                            $.bootstrapGrowl("Data berhasil dihapus");
+                                        });
+                                    });
+                                    $(this).remove();
+                                } else {
+                                    $(function() {
+                                        setTimeout(function() {
+                                            $.bootstrapGrowl("Data gagal dihapus");
+                                        });
+                                    });
+                                }
+                            });
+                    // do some other stuff here
+                });
+            return false;
+        });
+
         $('.user_isActive').change(function() {
             var val = $(this).val();
             var id = $(this).attr('data-val');
