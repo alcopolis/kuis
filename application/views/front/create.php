@@ -26,12 +26,12 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 
 
 
-                <h1 class="page-title" style="margin-left:180px;">+ Create Article</h1>
+                <h1 class="page-title" style="margin-left:180px;">+ Tulis Ceritamu</h1>
                 <div id="create-article" style="margin-top:20px;">    
 
                     <form class="form-horizontal" role="form" action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="create_article">
                         <div class="form-group clearfix">
-                            <label for="article_title" class="col-sm-2 control-label">Judul Artikel</label>
+                            <label for="article_title" class="col-sm-2 control-label">Judul Cerita</label>
                             <div class="col-sm-8">
                                 <input type="text" name="article_title" id="article_title" class="form-control" style="width:280px"/>
                             </div>
@@ -53,7 +53,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                             </div>
                         </div>
                         <div class="form-group clearfix">
-                            <label for="article_desc" class="col-sm-2 control-label">Deskripsi Artikel</label>
+                            <label for="article_desc" class="col-sm-2 control-label">Sinopsis Cerita</label>
                             <div class="col-sm-8">
                                 <textarea name="article_desc" id="article_desc" rows="5" class="form-control"></textarea>
                             </div>

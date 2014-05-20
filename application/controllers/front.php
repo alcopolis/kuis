@@ -75,7 +75,7 @@ class Front extends CI_Controller {
 		}
 				
 		$art_data = array();
-		$temp = $this->db->order_by('article_date', 'DESC')->limit($config['per_page'], $start)->get('article')->result();
+		$temp = $this->db->where('status','approved')->order_by('approved_date', 'DESC')->limit($config['per_page'], $start)->get('article')->result();
 		
 		foreach($temp as $t){
 			$art_data[$t->article_id]['user'] = $this->article_model->get_author_data($t->user_id, NULL);
@@ -180,7 +180,7 @@ class Front extends CI_Controller {
                     'logged_in' => TRUE
                 );
                 $this->session->set_userdata($newdata);
-                $this->session->set_flashdata('notif', 'Selamat datang ' . $this->session->userdata('full_name'));                
+                $this->session->set_flashdata('notif', 'Selamat datang ' . $this->session->userdata('full_name'));            
                 redirect($last_viewed_page);
                 break;
         }
@@ -199,10 +199,11 @@ class Front extends CI_Controller {
             'pwd' => $this->input->post('pwd')
         );
 
-        if (!$this->user_model->register($register)) {
-            $this->session->set_flashdata('notif', 'Mohon maaf email Anda telah terdaftar sebelumnya');
+        if ($this->user_model->register($register)) {
+            $this->session->set_flashdata('notif', 'Terima kasih telah mendaftar bersama kami');
             redirect('/');
         } else {
+            $this->session->set_flashdata('notif', 'Mohon maaf email Anda telah terdaftar sebelumnya');
             redirect('/');
         }
     }
@@ -234,7 +235,7 @@ class Front extends CI_Controller {
                    'name'   => 'liked',
                    'value'  => json_encode($liked),
                    'expire' => 60*60*60*24*30,
-                   'domain' => '.kuis.com',
+                   'domain' => 'ceritamu.innovate-indonesia.com',
                    'path'   => '/',
                );
 		
@@ -242,9 +243,11 @@ class Front extends CI_Controller {
 		
 		$this->like_counter($id);
 		
+		//var_dump($liked);
 		$respond['status'] = TRUE;
 		echo json_encode($respond); 
 	}
+	
 	
 	private function get_favorite(){
 		$result = get_cookie('liked');
@@ -280,7 +283,7 @@ class Front extends CI_Controller {
                 'status' => TRUE
             );
 
-            echo json_encode($respond);
+            //echo json_encode($respond);
         }
     }
 }

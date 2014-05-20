@@ -18,7 +18,9 @@ body{
 	background: url(../images/bg-texture.jpg) no-repeat center center;
 }
 
-ul{list-style:none;}
+ul{list-style:none; margin:10px 0;}
+ol{margin:10px 0;}
+ol li{margin-left:20px;}
 
 a{text-decoration:none}
 

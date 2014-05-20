@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#submit_article').click(function() {
-        var conf = confirm('Are you sure ?');
+        var conf = confirm('Anda tidak akan bisa melakukan perubahan isi cerita setelah cerita ini terkirim.\n\nApakah Anda ingin melanjutkan ?');
         if (conf) {
             $('#create_article').validate({
                 ignore: [],

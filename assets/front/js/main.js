@@ -73,7 +73,7 @@ function processLike(){
 		dataType: 'json',
 		success: function(respond) {
 			if(respond.status){
-				$('#like-button').attr('disabled', true).addClass('liked').html('Favorite');
+				$('button#like-button').attr('disabled', true).addClass('liked').html('Favorite');
 			}
 		}
 	});

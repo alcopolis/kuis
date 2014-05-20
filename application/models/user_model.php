@@ -15,8 +15,10 @@ class User_model extends CI_Model {
                 $msg = $this->msg_activation($user_id);
                 $this->send_email($user_id, $msg, 'Email Activation');
                 $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
+				return true;
             } else {
                 $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
+            return FALSE;
             }
         } else {
             return FALSE;
@@ -58,17 +60,18 @@ class User_model extends CI_Model {
         $user = $this->get_detail($user_id);
         $config = Array(
             'protocol' => "smtp",
-            'smtp_host' => "ssl://smtp.googlemail.com",
-            'smtp_port' => 465,
-            'smtp_user' => "samandajimmyr@gmail.com",
-            'smtp_pass' => "superbubur",
+            'smtp_host' => "mail.innovate-indonesia.com",
+            'smtp_port' => 25,
+            'smtp_user' => "webmaster@innovate-indonesia.com",
+            'smtp_pass' => "webmaster",
             'mailtype' => "text",
-            'charset' => "iso-8859-1"
+            'charset' => "iso-8859-1",
+            'wordwrap' => "TRUE"
         );
         $this->load->library('email', $config);
         $this->email->set_newline("\r\n");
         $subject = $sbj;
-        $this->email->from('samandajimmyr@gmail.com', 'Jimmy Samanda');
+        $this->email->from('webmaster@innovate-indonesia.com', 'Innovate Indonesia');
         $this->email->to($user[0]->email);
         $this->email->subject($subject);
         $this->email->message($msg);

@@ -5,7 +5,7 @@ $(document).ready(function() {
         var id = ini.attr('data-val');
         var stat = 'approved';
         if (conf) {
-            $.post(siteURL + '/admin_article/update_status/', {
+            $.post(siteURL + 'admin_article/update_status/', {
                 id: id,
                 stat: stat
             })
