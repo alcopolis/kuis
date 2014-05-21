@@ -30,10 +30,14 @@
 	<div class="wrapper">
         <section id="main" class="<?php echo $page; ?> left">
         	<?php if($this->uri->segment(1) === 'article'){ ?>
-                <?php if($fav_state){ ?>
-    				<button id="like-button" class="liked" value="Favorite">Favorite</button>
-				<?php }else{ ?>
-                	<button id="like-button" data-article_id="<?php echo $article->article_id; ?>" value="Make Favorite" onclick="processLike()" >Make Favorite</button>
+                <?php if($this->session->userdata('logged_in')){ ?>
+					<?php if($fav_state){ ?>
+                        <button id="like-button" class="liked" value="Favorite">Favorite</button>
+                    <?php }else{ ?>
+                        <button id="like-button" data-article_id="<?php echo $article->article_id; ?>" value="Make Favorite" onclick="processLike()" >Make Favorite</button>
+                    <?php } ?>
+                <?php }else{ ?>
+                	<button id="like-button" data-article_id="<?php echo $article->article_id; ?>" value="Make Favorite" onclick="loginFirst()" class="fav-inactive" >Make Favorite</button>
                 <?php } ?>
 			<?php } ?>
             

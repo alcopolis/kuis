@@ -235,7 +235,7 @@ class Front extends CI_Controller {
                    'name'   => 'liked',
                    'value'  => json_encode($liked),
                    'expire' => 60*60*60*24*30,
-                   'domain' => 'ceritamu.innovate-indonesia.com',
+                   'domain' => 'www.kuis.com',
                    'path'   => '/',
                );
 		
@@ -243,7 +243,6 @@ class Front extends CI_Controller {
 		
 		$this->like_counter($id);
 		
-		//var_dump($liked);
 		$respond['status'] = TRUE;
 		echo json_encode($respond); 
 	}

@@ -15,7 +15,7 @@ section#main{
     height:auto;
 }
 
-section#main.home{min-height:1000px;}
+section#main.home{min-height:1060px;}
 
 aside{
     width:250px;
@@ -128,8 +128,9 @@ article .page-title{color:#1E589A; width:80%; font-size:24px;}
     z-index:9999; 
 }
 
-#like-button:hover{background-image:url(../images/fav-1.png); color:#FF0;}
+#like-button:hover, #like-button.fav-inactive:hover{background-image:url(../images/fav-1.png); color:#FF0;}
 #like-button.liked{background-image:url(../images/fav-2.png); color:#FF0; cursor:default;}
+#like-button.fav-inactive{background-image:url(../images/fav-3.png);}
 .article-content{margin-top:40px;}
 .article-content p{padding-bottom:15px;}
 .article-content img{margin-bottom:15px; box-shadow:0 0 2px rgba(0,0,0,.7);}

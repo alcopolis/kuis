@@ -65,7 +65,8 @@ class Article_model extends CI_Model {
 
     public function get_detail($id) {
         $query = $this->db->get_where('article', array('article_id' => $id));
-        return $query->result();
+        //return $query->result();
+		return $query->row();
     }
 
     public function get_all_article() {
@@ -92,19 +93,61 @@ class Article_model extends CI_Model {
 
     public function update_status($id, $stat) {
         $result = $this->get_detail($id);
+		
+		//var_dump($result);
+		
         $data['status'] = $stat;
         if ($stat == 'approved') {
             $data['approved_date'] = date('Y-m-d H:i:s');
         }
+		
         if (count($result) > 0) {
             $this->db->trans_start();
             $this->db->update('article', $data, array('article_id' => $id));
             $this->db->trans_complete();
             $data = $this->db->trans_status();
-
+			
+			if ($stat == 'approved') {
+				$msg = '<p style="margin-bottom:10px;">Cerita yang Anda kirimkan sudah di approved.<br/> Silahkan klik link dibawah ini untuk melihat.</p>';
+				$msg .=	'<p><a style="text-decoration:none; color:#1F589B;" href="' . site_url() . 'article/' . $result->article_slug . '">' . site_url() . 'article/' . $result->article_slug . '</a></p>';
+				
+				$sbj = 'Selamat Ceritamu Sudah di Approved';
+				$this->send_email($result->user_id, $msg, $sbj);
+			}
+			
             return $data;
         }
     }
+	
+	
+	
+	
+	public function send_email($user_id, $msg, $sbj) {
+        $user = $this->get_author_data($user_id);
+        
+		$config = Array(
+            'protocol' => "smtp",
+            'smtp_host' => "mail.innovate-indonesia.com",
+            'smtp_port' => 25,
+            'smtp_user' => "webmaster@innovate-indonesia.com",
+            'smtp_pass' => "webmaster",
+            'mailtype' => "html",
+            'charset' => "iso-8859-1",
+            'wordwrap' => "TRUE"
+        );
+				
+        $this->load->library('email', $config);
+        $this->email->set_newline("\r\n");
+        $subject = $sbj;
+        $this->email->from('webmaster@innovate-indonesia.com', 'Innovate Indonesia');
+        $this->email->to($user->email);
+        $this->email->subject($subject);
+        $this->email->message($msg);
+        $this->email->send();
+    }
+
+	
+	
 
     public function save($id, $data) {
         if ($id == NULL) { //save the profile
@@ -234,5 +277,4 @@ class Article_model extends CI_Model {
             return $data;
         }
     }
-
 }

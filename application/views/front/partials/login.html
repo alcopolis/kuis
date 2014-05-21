@@ -1,5 +1,13 @@
 <div id="login-register" style="margin-top:40px; padding-bottom:10px; border-bottom:3px solid rgba(255,255,255,.35);">
-    <div class="tab-nav"><a href="#login" class="current">Login</a> | <a href="#register">Daftar</a></div>
+    <div class="tab-nav"><a href="#login" class="current">Login</a> | <a href="#register">Registrasi</a></div>
+    
+    <div id="notif" style="font-size:12px; color:#FFF; margin:20px 12px 10px 12px; text-shadow:none; background:rgba(20,20,20,.5); padding:10px; border-radius:5px;">
+        <?php if($notif != NULL){ ?>
+            <?php echo $notif; ?>
+        <?php }else{ ?>
+        	Silahkan login, atau daftar dengan email Anda untuk bisa mengikuti kuis ini.
+        <?php } ?>
+    </div>	
     
     <div class="tab-wrapper clearfix">
         <div id="login" class="tab active">
@@ -23,10 +31,4 @@
             </form>
         </div>
     </div>
-    
-    <?php if($notif != NULL){ ?>
-        <div id="notif" style="font-size:12px; color:#FFF; margin:10px 0; text-shadow:none;">
-            <?php echo $notif; ?>
-        </div>	
-    <?php } ?>
 </div>

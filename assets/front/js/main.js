@@ -53,7 +53,14 @@ $(document).ready(function(){
 
 
 
-//-------------------- Like Method --------------------------//
+//-------------------- Method --------------------------//
+
+
+
+function loginFirst(){
+	alert('Anda harus login terlebih dahulu untuk memilih cerita favorit.');
+}
+
 
 
 function processLike(){
