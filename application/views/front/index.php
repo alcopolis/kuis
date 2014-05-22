@@ -29,7 +29,7 @@
 <body>
 	<div class="wrapper">
         <section id="main" class="<?php echo $page; ?> left">
-        	<?php if($this->uri->segment(1) === 'article'){ ?>
+        	<?php if($this->uri->segment(1) === 'article' AND $article != NULL ){ ?>
                 <?php if($this->session->userdata('logged_in')){ ?>
 					<?php if($fav_state){ ?>
                         <button id="like-button" class="liked" value="Favorite">Favorite</button>

@@ -34,7 +34,6 @@ class Front extends CI_Controller {
     public function index($page = 'home') {
 
         $data['title'] = 'Innovate Ceritamu | ';
-        $data['notif'] = NULL;
         $data['recent_articles'] = $this->article_model->get_recent();
         $data['page'] = $page;
 
@@ -42,7 +41,7 @@ class Front extends CI_Controller {
             $data['recent_articles'] = $this->article_model->get_recent();
             $data['user_fullname'] = $this->session->userdata['full_name'];
         } else {
-            $data['notif'] = $this->session->flashdata('notif');
+            $data['notif'] = 'Silahkan login, atau daftar dengan email Anda untuk bisa mengikuti kuis ini.';
         }
 
         $this->load->view('front/index', $data);
@@ -55,7 +54,7 @@ class Front extends CI_Controller {
 		$data['title'] = 'Innovate Ceritamu | ';
 		
 		$config['base_url'] = base_url() . 'articles';
-		$config['total_rows'] = $this->article_model->record_count();
+		$config['total_rows'] = $this->article_model->record_count(array('status'=>'approved'));
 		$config['per_page'] = 12;
 		$config["uri_segment"] = 2;
 		$config['num_links'] = 5;
@@ -94,18 +93,27 @@ class Front extends CI_Controller {
 	
 	
 	
-	public function article($slug) {
+	public function article($slug='') {
 		$data['article'] = $this->article_model->get_articles_by('', array('article_slug'=>$slug), TRUE);
-		$data['author'] = $this->article_model->get_author_data($data['article']->user_id);
-		$data['category'] = $this->category_model->get_detail($data['article']->category_id);
 		$data['recent_articles'] = $this->article_model->get_recent();
+			
+		if($slug == '' OR count($data['article']) == 0){
+			$data['page'] = '404';
+			$data['title'] = 'Innovate Ceritamu | ';
+			$data['article'] = NULL;
+		}else{
+			$data['page'] = 'article';
+			$data['title'] = $data['article']->article_title;
 		
-		$data['title'] = $data['article']->article_title;
-		$data['page'] = 'article';
-		$data['fav_state'] = $this->check_favorite($data['article']->article_id);
-		
-		$sql = "UPDATE article SET view_count=view_count+1 WHERE article_slug='" . $slug ."'";
-		$this->db->query($sql);
+			$data['author'] = $this->article_model->get_author_data($data['article']->user_id);
+			$data['category'] = $this->category_model->get_detail($data['article']->category_id);
+			$data['recent_articles'] = $this->article_model->get_recent();
+			
+			$data['fav_state'] = $this->check_favorite($data['article']->article_id);
+			
+			$sql = "UPDATE article SET view_count=view_count+1 WHERE article_slug='" . $slug ."'";
+			$this->db->query($sql);
+		}
 		
 		$this->render_article('front/index',$data);
 	}
@@ -224,6 +232,11 @@ class Front extends CI_Controller {
         }
     }
 	
+	
+	//public function page_not_found() {
+//		$data['page'] = '404';
+//		$this->load->view('front/index', $data);
+//	}
 	
 	//-------------------- AJAX Function ------------------------------//
 	

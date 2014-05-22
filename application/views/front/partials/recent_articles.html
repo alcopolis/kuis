@@ -1,12 +1,14 @@
-<h2 class="section-title">Cerita Terbaru</h2>
-<ul id="recent-articles">
-    <?php foreach($recent_articles as $art){ ?>
-        <li class="clearfix">
-            <img src="<?php echo base_url(); ?>article/thumbnail/<?php echo $art['content']->article_pic; ?>" style="width:80px; height:80px;" />
-            <h4 class="title"><a href="<?php echo base_url(); ?>article/<?php echo $art['content']->article_slug; ?>" title="<?php echo $art['content']->article_title; ?>"><?php echo substr($art['content']->article_title,0,40) . '..'; ?></a></h4>
-            <div class="post-meta">
-                <p class="user">by <?php echo $art['user']->full_name; ?></p>
-            </div>
-        </li>
-    <?php } ?>
-</ul>
+<?php if($recent_articles != NULL){ ?>
+    <h2 class="section-title">Cerita Terbaru</h2>
+    <ul id="recent-articles">
+        <?php foreach($recent_articles as $art){ ?>
+            <li class="clearfix">
+                <img src="<?php echo base_url(); ?>article/thumbnail/<?php echo $art['content']->article_pic; ?>" style="width:80px; height:80px;" />
+                <h4 class="title"><a href="<?php echo base_url(); ?>article/<?php echo $art['content']->article_slug; ?>" title="<?php echo $art['content']->article_title; ?>"><?php echo substr($art['content']->article_title,0,40) . '..'; ?></a></h4>
+                <div class="post-meta">
+                    <p class="user">by <?php echo $art['user']->full_name; ?></p>
+                </div>
+            </li>
+        <?php } ?>
+    </ul>
+<?php } ?>

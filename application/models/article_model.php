@@ -32,8 +32,13 @@ class Article_model extends CI_Model {
         return $data;
     }
 
-    public function record_count() {
-        return $this->db->count_all($this->_table);
+    public function record_count($where = NULL) {
+		if($where != NULL){
+			$rows = $this->db->where($where)->get($this->_table);
+			return $rows->num_rows();
+		}else{
+        	return $this->db->count_all($this->_table);
+		}
     }
 
     public function get_articles($fields = NULL, $single = FALSE) {

@@ -36,6 +36,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                                 <input type="text" name="article_title" id="article_title" class="form-control" style="width:280px"/>
                             </div>
                         </div>
+                        
                         <div class="form-group clearfix">
                             <label for="category_id" class="col-sm-2 control-label">Kategori</label>
                             <div class="col-sm-8">
@@ -59,15 +60,16 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                             </div>
                         </div>
                         <div class="form-group clearfix">
-                            <label for="article_body" class="col-sm-2 control-label">Isi Artikel</label>
+                            <label for="article_body" class="col-sm-2 control-label">Isi Cerita</label>
                             <div class="col-sm-8">
                                 <textarea id="article_body" name="article_body" class="form-control"></textarea>
                             </div>
                         </div>
+                        
                         <div class="form-group clearfix">
-                            <label for="" class="col-sm-2 control-label">Gambar Artikel</label>
+                            <label for="" class="col-sm-2 control-label">Upload Gambar</label>
                             <div class="col-sm-8">
-                                <input type="file" name="content" class="form-control article_pic" />
+                                <input type="file" name="content" class="form-control article_pic" style="width:280px;" />&nbsp;&nbsp;&nbsp;<em style="font-size:11px;">Tambahkan gambar yang membuat cerita menjadi lebih menarik</em>
                             </div>
                         </div>
                         

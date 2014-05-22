@@ -46,7 +46,7 @@ $route['article/(:any)'] = 'front/article/$1';
 $route['create_article'] = 'front/create_article';
 $route['logout'] = 'front/logout';
 $route['dashboard'] = 'user/index';
-$route['404_override'] = '';
+$route['404_override'] = 'front/index/404';
 
 
 /* End of file routes.php */

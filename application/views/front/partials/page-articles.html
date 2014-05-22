@@ -1,21 +1,25 @@
 <!--<h1 class="page-title">Articles</h1>-->
 <div id="<?php echo $page; ?>" class="clearfix">    
-    <?php foreach($articles as $art){ ?>
-        <div id="<?php echo $art['content']->article_id; ?>" class="article" title="<?php echo $art['content']->article_desc; ?>">
-            <img src="<?php echo base_url(); ?>article/thumbnail/<?php echo $art['content']->article_pic; ?>" style="width:150px; height:150px;" />
-            
-            <div class="art-details">
-                <h4 class="title" style="margin-bottom:5px;"><a href="<?php echo site_url(); ?>article/<?php echo $art['content']->article_slug; ?>" title="<?php echo $art['content']->article_title; ?>"><?php echo substr($art['content']->article_title, 0, 20); ?></a></h4>
-                <div class="post-meta" style="padding-bottom:5px;">
-                    <p class="user">by <?php echo $art['user']->full_name; ?></p>
-                    <p class="time"><?php echo date('d M Y', strtotime($art['content']->article_date)); ?></p>
+    <?php if($articles != NULL){ ?>
+        <?php foreach($articles as $art){ ?>
+            <div id="<?php echo $art['content']->article_id; ?>" class="article" title="<?php echo $art['content']->article_desc; ?>">
+                <img src="<?php echo base_url(); ?>article/thumbnail/<?php echo $art['content']->article_pic; ?>" style="width:150px; height:150px;" />
+                
+                <div class="art-details">
+                    <h4 class="title" style="margin-bottom:5px;"><a href="<?php echo site_url(); ?>article/<?php echo $art['content']->article_slug; ?>" title="<?php echo $art['content']->article_title; ?>"><?php echo substr($art['content']->article_title, 0, 20); ?></a></h4>
+                    <div class="post-meta" style="padding-bottom:5px;">
+                        <p class="user">by <?php echo $art['user']->full_name; ?></p>
+                        <p class="time"><?php echo date('d M Y', strtotime($art['content']->article_date)); ?></p>
+                    </div>
                 </div>
+                
+                 <?php if($this->session->userdata('logged_in') && $art['fav_state']){ ?>
+                    <span class="fav"></span>
+                 <?php } ?>
             </div>
-            
-             <?php if($this->session->userdata('logged_in') && $art['fav_state']){ ?>
-             	<span class="fav"></span>
-             <?php } ?>
-        </div>
+        <?php } ?>
+    <?php }else{ ?>
+		<img src="<?php echo base_url('assets/front'); ?>/images/no-story.png" style="position:absolute; left:-110px; top:0px;"/>    
     <?php } ?>
 </div>
 
