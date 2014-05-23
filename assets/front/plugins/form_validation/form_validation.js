@@ -14,7 +14,7 @@ $(document).ready(function() {
                             var editorcontent = textarea.value.replace(/<[^>]*>/gi, ''); // strip tags
                             return editorcontent.length === 0;
                         },
-                        minlength: 1500
+                        minlength: 1000
                     },
                     article_desc: {
                         required: true

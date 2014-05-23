@@ -50,7 +50,7 @@ class User extends CI_Controller {
                 $this->session->set_userdata($newdata);
                 $this->session->set_flashdata('notif', 'Selamat datang ' . $this->session->userdata('full_name'));
                 if ($data[0]->role == 'user') {
-                    redirect('page');
+                    redirect('/');
                 } else {
                     redirect('user/dashboard_admin');
                 }
@@ -78,18 +78,20 @@ class User extends CI_Controller {
     }
 
     public function register() {
-        $register = array(
-            'email' => $this->input->post('email'),
-            'full_name' => $this->input->post('full_name'),
-            'pwd' => $this->input->post('pwd')
-        );
-        if ($this->user_model->register($register)) {
-            $this->session->set_flashdata('notif', 'Terima kasih telah mendaftar bersama kami');
-            redirect('user/dashboard_admin');
-        } else {
-            $this->session->set_flashdata('notif', 'Mohon maaf email Anda telah terdaftar sebelumnya');
-            redirect('user/dashboard_admin');
-        }
+	
+		$register = array(
+			'email' => $this->input->post('email'),
+			'full_name' => $this->input->post('full_name'),
+			'pwd' => $this->input->post('pwd')
+		);
+		
+		if ($this->user_model->register($register)) {
+			$this->session->set_flashdata('notif', 'Terima kasih telah mendaftar bersama kami');
+			redirect('user/dashboard_admin');
+		} else {
+			$this->session->set_flashdata('notif', 'Mohon maaf email Anda telah terdaftar sebelumnya');
+			redirect('user/dashboard_admin');
+		}
     }
 
     public function email_activation() {

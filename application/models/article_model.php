@@ -22,7 +22,7 @@ class Article_model extends CI_Model {
 
     public function get_recent() {
         $data = array();
-        $temp = $this->db->order_by('article_date', 'DESC')->limit(5)->get($this->_table)->result();
+        $temp = $this->db->where('status','approved')->order_by('article_date', 'DESC')->limit(5)->get($this->_table)->result();
 
         foreach ($temp as $t) {
             $data[$t->article_id]['user'] = $this->get_author_data($t->user_id, NULL);

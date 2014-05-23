@@ -40,10 +40,9 @@ class Front extends CI_Controller {
         if ($this->session->userdata('logged_in')) {
             $data['recent_articles'] = $this->article_model->get_recent();
             $data['user_fullname'] = $this->session->userdata['full_name'];
-        } else {
-            $data['notif'] = 'Silahkan login, atau daftar dengan email Anda untuk bisa mengikuti kuis ini.';
         }
-
+		
+		$data['notif'] = $this->session->flashdata('notif');
         $this->load->view('front/index', $data);
     }
 	
@@ -201,19 +200,31 @@ class Front extends CI_Controller {
     }
 
     public function register() {
-        $register = array(
-            'email' => $this->input->post('email'),
-            'full_name' => $this->input->post('full_name'),
-            'pwd' => $this->input->post('pwd')
-        );
-
-        if ($this->user_model->register($register)) {
-            $this->session->set_flashdata('notif', 'Terima kasih telah mendaftar bersama kami');
-            redirect('/');
-        } else {
-            $this->session->set_flashdata('notif', 'Mohon maaf email Anda telah terdaftar sebelumnya');
-            redirect('/');
-        }
+		$this->form_validation->set_rules('full_name', 'Nama Lengkap', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[user.email]');
+		$this->form_validation->set_rules('pwd', 'Password', 'required|matches[confirm]');
+		$this->form_validation->set_rules('confirm', 'Konfirmasi Password', 'required');
+		
+		$this->form_validation->set_message('required', '! Lengkapi - %s');
+		$this->form_validation->set_message('valid_email', '! Email tidak valid');
+		$this->form_validation->set_message('is_unique', '! Email Anda telah terdaftar');
+		$this->form_validation->set_message('matches', '! Password tidak sama');
+		
+		if($this->form_validation->run()){
+			$register = array(
+				'email' => $this->input->post('email'),
+				'full_name' => $this->input->post('full_name'),
+				'pwd' => $this->input->post('pwd')
+			);
+	
+			if ($this->user_model->register($register)) {
+				$this->session->set_flashdata('notif', 'Terima kasih telah mendaftar. Silahkan cek email Anda untuk konfirmasi.');
+				redirect('/');
+			} 
+		}else{
+			$this->session->set_flashdata('notif', validation_errors('<span style="display:block;">', '</span>'));
+			redirect('/');
+		}
     }
 
     public function email_activation() {

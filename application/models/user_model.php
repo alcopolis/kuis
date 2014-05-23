@@ -6,24 +6,43 @@ if (!defined('BASEPATH')) {
 
 class User_model extends CI_Model {
 
-    public function register($data) {
-        if (!$this->check_email($data['email'])) {
+    //public function register($data) {
+//        if (!$this->check_email($data['email'])) {
+//            $data['key'] = do_hash(date('Y-m-d H:i:s'), 'MD5');
+//            $data['pwd'] = do_hash($data['pwd'], 'MD5');
+//            if ($this->db->insert('user', $data)) {
+//                $user_id = $this->db->insert_id();
+//                $msg = $this->msg_activation($user_id);
+//                $this->send_email($user_id, $msg, 'Email Activation');
+//                $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
+//				return true;
+//            } else {
+//                $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
+//            return FALSE;
+//            }
+//        } else {
+//            return FALSE;
+//        }
+//    }
+	
+	
+	public function register($data) {
             $data['key'] = do_hash(date('Y-m-d H:i:s'), 'MD5');
             $data['pwd'] = do_hash($data['pwd'], 'MD5');
-            if ($this->db->insert('user', $data)) {
+            
+			if ($this->db->insert('user', $data)) {
                 $user_id = $this->db->insert_id();
                 $msg = $this->msg_activation($user_id);
                 $this->send_email($user_id, $msg, 'Email Activation');
-                $this->session->set_flashdata('notif', 'Data telah berhasil disimpan');
+               //$this->session->set_flashdata('notif', 'Terima kasih sudah melakukan pendaftaran, silahkan cek email Anda untuk konfirmasi.');
 				return true;
             } else {
                 $this->session->set_flashdata('notif', 'Data gagal disimpan, silahkan coba beberapa saat lagi');
-            return FALSE;
+            	return FALSE;
             }
-        } else {
-            return FALSE;
-        }
     }
+	
+	
 
     public function check_email($email) {
         $query = $this->db->get_where('user', array('email' => $email));
@@ -64,7 +83,7 @@ class User_model extends CI_Model {
             'smtp_port' => 25,
             'smtp_user' => "webmaster@innovate-indonesia.com",
             'smtp_pass' => "webmaster",
-            'mailtype' => "text",
+            'mailtype' => "html",
             'charset' => "iso-8859-1",
             'wordwrap' => "TRUE"
         );
@@ -81,9 +100,10 @@ class User_model extends CI_Model {
     public function msg_activation($user_id) {
         $user = $this->get_detail($user_id);
         $msg = '
-            Thanks for signing up! 
-            Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below. 
-            Please click this link to activate your account: 
+            Thanks for signing up!<br/>
+            Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.<br/><br/> 
+            
+			Please click this link to activate your account:<br/>
  
             ' . site_url('user/email_activation/' . $user[0]->user_id . '/' . $user[0]->key);
         return $msg;

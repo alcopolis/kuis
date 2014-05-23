@@ -47,7 +47,7 @@ CKEDITOR.editorConfig = function(config) {
         showWordCount: false,
         // Whether or not you want to show the Char Count
         showCharCount: true,
-        charLimit: '3000',
+        charLimit: '2000',
         limitReachedNotified: true
     };
 };
