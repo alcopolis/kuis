@@ -53,12 +53,12 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                                 <input type="text" name="usage" id="usage" class="form-control" style="width:280px"/>&nbsp;&nbsp;&nbsp;<em style="font-size:11px;">Data tidak akan dipublikasikan</em>
                             </div>
                         </div>
-                        <div class="form-group clearfix">
+                        <!-- <div class="form-group clearfix">
                             <label for="article_desc" class="col-sm-2 control-label">Sinopsis Cerita</label>
                             <div class="col-sm-8">
                                 <textarea name="article_desc" id="article_desc" rows="5" class="form-control"></textarea>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group clearfix">
                             <label for="article_body" class="col-sm-2 control-label">Isi Cerita</label>
                             <div class="col-sm-8">
@@ -69,7 +69,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                         <div class="form-group clearfix">
                             <label for="" class="col-sm-2 control-label">Upload Gambar</label>
                             <div class="col-sm-8">
-                                <input type="file" name="content" class="form-control article_pic" style="width:280px;" />&nbsp;&nbsp;&nbsp;<em style="font-size:11px;">Tambahkan gambar yang membuat cerita menjadi lebih menarik</em>
+                                <input type="file" name="content" class="form-control article_pic" style="width:280px;" />&nbsp;&nbsp;&nbsp;<em style="font-size:11px;">Tambahkan gambar yang membuat cerita menjadi lebih menarik (max filesize: 300Kb)</em>
                             </div>
                         </div>
                         

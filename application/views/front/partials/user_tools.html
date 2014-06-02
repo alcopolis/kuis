@@ -1,4 +1,9 @@
-<p id="user-greetings">Hi, <?php echo $user_fullname; ?></p>
+<p id="user-greetings">
+Hi, <?php echo $user_fullname; ?>
+<span style="display:block; font-size:12px; color:#FFF; padding:10px; margin:0; text-shadow:none;">
+	<?php echo $notif; ?>
+</span>
+</p>
 
 <div id="user-tools">
     <a id="create-article" href="<?php echo site_url(); ?>create_article" title="Create article">Create</a>

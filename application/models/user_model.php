@@ -87,6 +87,19 @@ class User_model extends CI_Model {
             'charset' => "iso-8859-1",
             'wordwrap' => "TRUE"
         );
+		
+		
+		/* $config = Array(
+            'protocol' => "smtp",
+            'smtp_host' => "smtp.gmail.com",
+            'smtp_port' => 465,
+            'smtp_user' => "mqm.quadplay@gmail.com",
+            'smtp_pass' => "quatro2012",
+            'mailtype' => "html",
+            'charset' => "iso-8859-1",
+            'wordwrap' => "TRUE"
+        ); */
+		
         $this->load->library('email', $config);
         $this->email->set_newline("\r\n");
         $subject = $sbj;
@@ -101,7 +114,7 @@ class User_model extends CI_Model {
         $user = $this->get_detail($user_id);
         $msg = '
             Thanks for signing up!<br/>
-            Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.<br/><br/> 
+            Your account has been created, you can login after you activated your account by pressing the url below.<br/><br/> 
             
 			Please click this link to activate your account:<br/>
  

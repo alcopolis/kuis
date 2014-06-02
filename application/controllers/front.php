@@ -131,7 +131,7 @@ class Front extends CI_Controller {
         $article = array(
 			'article_title' => str_replace(array("'", "*"), '', $this->input->post('article_title')),
             'article_slug' => $this->article_model->toAscii($this->input->post('article_title'), "'", '_'),
-            'article_desc' => $this->input->post('article_desc'),
+//            'article_desc' => $this->input->post('article_desc'),
             'article_body' => $this->input->post('article_body'),
             'category_id' => $this->input->post('category_id'),
 			'provider' => $this->input->post('provider'),
@@ -142,7 +142,10 @@ class Front extends CI_Controller {
             $status = $this->article_model->upload_pic('./article/');
             if ($status['status'] == TRUE) {
                 $article['article_pic'] = $status['img_name'];
-            }
+            }else{
+				$this->session->set_flashdata('notif', 'Maaf proses upload gagal karena ukuran gambar yang anda pilih melebihi batas maksimal 300Kb.');
+				redirect('create_article');
+			}
         } else if ($_FILES['content']['error'] == 4) {
             $this->session->set_flashdata('notif', 'masukkan file gambar produk terlebih dahulu');
             redirect('create_article');
@@ -152,9 +155,10 @@ class Front extends CI_Controller {
         }
         $id = NULL;
         if ($this->article_model->save($id, $article)) {
-            redirect('article/' . $article['article_slug']);
-        } else {
-            redirect('create_article');
+            //redirect('article/' . $article['article_slug']);
+        //} else {
+			$this->session->set_flashdata('notif', 'Terima kasih, Cerita Anda sudah tersimpan.');
+            redirect('articles');
         }
     }
 	

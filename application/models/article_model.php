@@ -225,7 +225,8 @@ class Article_model extends CI_Model {
             $config = array(
                 'allowed_types' => 'jpg|jpeg|png',
                 'encrypt_name' => TRUE,
-                'upload_path' => $gallery_path
+                'upload_path' => $gallery_path,
+				'max_size' => '300'
             );
 
             $this->load->library('upload', $config);
